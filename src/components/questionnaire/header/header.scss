@@ -2,33 +2,28 @@
 
 .header {
   width: 100%;
-  display: table;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 8% 8% auto 10%;
+  grid-template-rows: 80px;
   background-color: $background-header-color;
   border-right: 0;
   border-left: 0;
 
-  .header-logo {
-    display: table-cell;
-    height: 40px;
-    width: 40px;
-    img {
-      vertical-align: middle;
-      height: 50px;
-      width: auto;
-      padding: 1em;
-    }
-  }
   .header-title {
-    display: table-cell;
+    padding: 1em;
   }
 
-  .quit-icon {
+  .header-logo {
+    // horizontal align
+    justify-self: center;
+    // vertical align
+    align-self: center;
+    height: 50px;
+    width: auto;
+  }
+
+  .close-icon {
     background-color: transparent;
     border: none;
-    position: relative;
-    top: 1em;
-    right: 1em;
-    float: right;
   }
 }

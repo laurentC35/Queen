@@ -3,6 +3,10 @@
 */
 @import './variables.scss';
 
+#queen-body {
+  height: 100%;
+}
+
 // Declaration's style
 .components .declaration-lunatic {
   color: $declaration-color;
@@ -11,13 +15,16 @@
 .body-container {
   margin-top: 1em;
   background-color: $background-header-color;
-  padding-top: 2em;
   padding-bottom: 2em;
+  display: grid;
+  grid-template-columns: 90% auto;
+  grid-template-rows: 90% auto;
+  height: 70%;
 }
 
 .components {
+  padding-top: 2em;
   .lunatic-component {
-    height: 60vh;
     margin-left: auto;
     margin-right: auto;
     width: 80%;

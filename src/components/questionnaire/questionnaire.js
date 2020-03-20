@@ -6,8 +6,11 @@ import alphabet from '../../utils/alphabet';
 import * as UQ from '../../utils/questionnaire';
 import Header from './header';
 import Buttons from './buttons';
+import NavBar from './rightNavbar';
 
 const Questionnaire = () => {
+  const [navOpen, setNavOpen] = useState(false);
+
   const [questionnaire, setQuestionnaire] = useState(
     lunatic.mergeQuestionnaireAndData(simpsons)(data)
   );
@@ -63,44 +66,48 @@ const Questionnaire = () => {
   console.log('viewed pages :' + viewedPages);
   return (
     <>
-      <Header
-        title={questionnaire.label}
-        sequence={lunatic.interpret(['VTL'])(bindings)(sequence)}
-        components={filteredComponents}
-        bindings={bindings}
-        subsequence={lunatic.interpret(['VTL'])(bindings)(subsequence)}
-        setPage={setCurrentPage}
-        viewedPages={viewedPages}
-      />
-      <div className="body-container">
-        <div className="components">
-          <div className="lunatic lunatic-component" key={`component-${id}`}>
-            <Component
-              id={id}
-              {...props}
-              options={myOptions || label}
-              handleChange={updatevalue => onChange(updatevalue)}
-              labelPosition="TOP"
-              preferences={['COLLECTED']}
-              features={['VTL']}
-              bindings={bindings}
-              focused
-            />
-          </div>
-        </div>
-        <Buttons
-          nbModules={filteredComponents.length}
-          save={() => {
-            console.log('saving ...');
-            console.log('currentpage:' + currentPage);
-            console.log(lunatic.getCollectedStateByValueType(questionnaire)('COLLECTED'));
-          }}
-          page={UQ.findPageIndex(filteredComponents)(currentPage)}
-          pageDown={() => goPrevious()}
-          pageUp={() => {
-            goNext();
-          }}
+      <div id="queen-body" className={navOpen ? 'back' : ''}>
+        <Header
+          title={questionnaire.label}
+          sequence={lunatic.interpret(['VTL'])(bindings)(sequence)}
+          components={filteredComponents}
+          bindings={bindings}
+          subsequence={lunatic.interpret(['VTL'])(bindings)(subsequence)}
+          setPage={setCurrentPage}
+          viewedPages={viewedPages}
+          setNavOpen={setNavOpen}
         />
+        <div className="body-container">
+          <div className="components">
+            <div className="lunatic lunatic-component" key={`component-${id}`}>
+              <Component
+                id={id}
+                {...props}
+                options={myOptions || label}
+                handleChange={updatevalue => onChange(updatevalue)}
+                labelPosition="TOP"
+                preferences={['COLLECTED']}
+                features={['VTL']}
+                bindings={bindings}
+                focused
+              />
+            </div>
+          </div>
+          <NavBar nbModules={queenComponents.length} page={currentPage} />
+          <Buttons
+            nbModules={filteredComponents.length}
+            save={() => {
+              console.log('saving ...');
+              console.log('currentpage:' + currentPage);
+              console.log(lunatic.getCollectedStateByValueType(questionnaire)('COLLECTED'));
+            }}
+            page={UQ.findPageIndex(filteredComponents)(currentPage)}
+            pageDown={() => goPrevious()}
+            pageUp={() => {
+              goNext();
+            }}
+          />
+        </div>
       </div>
     </>
   );
