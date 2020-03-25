@@ -59,6 +59,8 @@ const Questionnaire = () => {
         label: myLabel,
       };
     });
+  } else {
+    myOptions = options;
   }
   return (
     <>
