@@ -20,6 +20,12 @@ const Questionnaire = () => {
    */
   const [viewedPages, setViewedPages] = useState([1]);
 
+  const onChange = updatedValue => {
+    setQuestionnaire(
+      lunatic.updateQuestionnaire('COLLECTED')(questionnaire)(['COLLECTED'])(updatedValue)
+    );
+  };
+
   const bindings = lunatic.getBindings(questionnaire);
 
   const queenComponents = UQ.buildQueenQuestionnaire(questionnaire.components);
@@ -74,7 +80,7 @@ const Questionnaire = () => {
                 id={id}
                 {...props}
                 options={myOptions}
-                handleChange={null}
+                handleChange={onChange}
                 labelPosition="TOP"
                 preferences={['COLLECTED']}
                 features={['VTL']}
