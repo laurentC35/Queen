@@ -20,14 +20,6 @@ const Questionnaire = () => {
    */
   const [viewedPages, setViewedPages] = useState([1]);
 
-  const onChange = updatedValue => {
-    console.log('update value');
-    console.log(updatedValue);
-    setQuestionnaire(
-      lunatic.updateQuestionnaire('COLLECTED')(questionnaire)(['COLLECTED'])(updatedValue)
-    );
-  };
-
   const bindings = lunatic.getBindings(questionnaire);
 
   const queenComponents = UQ.buildQueenQuestionnaire(questionnaire.components);
@@ -50,7 +42,7 @@ const Questionnaire = () => {
   let myOptions = [];
   if (componentType === 'CheckboxOne') {
     myOptions = options.map((option, index) => {
-      let myLabel = (
+      const myLabel = (
         <span>
           <span className="code">{myOptions.length > 10 ? alphabet[index] : index}</span>
           {lunatic.interpret(['VTL'])(bindings)(option.label)}
@@ -62,8 +54,6 @@ const Questionnaire = () => {
       };
     });
   }
-  console.log('current page :' + currentPage);
-  console.log('viewed pages :' + viewedPages);
   return (
     <>
       <div id="queen-body" className={navOpen ? 'back' : ''}>
@@ -83,8 +73,8 @@ const Questionnaire = () => {
               <Component
                 id={id}
                 {...props}
-                options={myOptions || label}
-                handleChange={updatevalue => onChange(updatevalue)}
+                options={myOptions}
+                handleChange={null}
                 labelPosition="TOP"
                 preferences={['COLLECTED']}
                 features={['VTL']}
@@ -97,8 +87,6 @@ const Questionnaire = () => {
           <Buttons
             nbModules={filteredComponents.length}
             save={() => {
-              console.log('saving ...');
-              console.log('currentpage:' + currentPage);
               console.log(lunatic.getCollectedStateByValueType(questionnaire)('COLLECTED'));
             }}
             page={UQ.findPageIndex(filteredComponents)(currentPage)}
