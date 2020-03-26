@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import root from 'react-shadow';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

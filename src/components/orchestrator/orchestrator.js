@@ -113,6 +113,8 @@ Orchestrator.propTypes = {
   savingType: PropTypes.oneOf(['COLLECTED', 'FORCED', 'EDITED']).isRequired,
   preferences: PropTypes.arrayOf(PropTypes.string).isRequired,
   filterDescription: PropTypes.bool.isRequired,
+  source: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Orchestrator;
