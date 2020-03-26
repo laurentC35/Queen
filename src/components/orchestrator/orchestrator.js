@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import * as lunatic from '@inseefr/lunatic';
 import simpsons from '../../utils/fake-survey/simpsons copy.json';
-import data from '../../utils/fake-survey/data.json';
 import alphabet from '../../utils/alphabet';
 import * as UQ from '../../utils/questionnaire';
 import Header from './header';
 import Buttons from './buttons';
 import NavBar from './rightNavbar';
 
-const Questionnaire = () => {
+const Orchestrator = ({
+  savingType = 'COLLECTED',
+  preferences = ['COLLECTED'],
+  source = simpsons,
+  data = {},
+}) => {
   const [navOpen, setNavOpen] = useState(false);
 
   const [questionnaire, setQuestionnaire] = useState(
-    lunatic.mergeQuestionnaireAndData(simpsons)(data)
+    lunatic.mergeQuestionnaireAndData(source)(data)
   );
   const [currentPage, setCurrentPage] = useState(1);
   /**
@@ -22,7 +27,7 @@ const Questionnaire = () => {
 
   const onChange = updatedValue => {
     setQuestionnaire(
-      lunatic.updateQuestionnaire('COLLECTED')(questionnaire)(['COLLECTED'])(updatedValue)
+      lunatic.updateQuestionnaire(savingType)(questionnaire)(preferences)(updatedValue)
     );
   };
 
@@ -84,7 +89,7 @@ const Questionnaire = () => {
                 options={myOptions}
                 handleChange={onChange}
                 labelPosition="TOP"
-                preferences={['COLLECTED']}
+                preferences={preferences}
                 features={['VTL']}
                 bindings={bindings}
                 focused
@@ -95,7 +100,7 @@ const Questionnaire = () => {
           <Buttons
             nbModules={filteredComponents.length}
             save={() => {
-              console.log(lunatic.getCollectedStateByValueType(questionnaire)('COLLECTED'));
+              console.log(lunatic.getCollectedStateByValueType(questionnaire)(savingType));
             }}
             page={UQ.findPageIndex(filteredComponents)(currentPage)}
             pageDown={() => goPrevious()}
@@ -109,4 +114,11 @@ const Questionnaire = () => {
   );
 };
 
-export default Questionnaire;
+Orchestrator.propTypes = {
+  savingType: PropTypes.oneOf(['COLLECTED', 'FORCED', 'EDITED']).isRequired,
+  preferences: PropTypes.arrayOf(PropTypes.string).isRequired,
+  source: PropTypes.objectOf(PropTypes.object()).isRequired,
+  data: PropTypes.objectOf(PropTypes.object()).isRequired,
+};
+
+export default Orchestrator;
