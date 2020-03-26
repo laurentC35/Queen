@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import root from 'react-shadow';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Orchestrator from '../orchestrator';
 import styles from '../style/style.scss';
 import NotFound from '../shared/not-found';
 
-const Root = () => {
+const Root = ({ isStandalone, authenticationMode }) => {
   const customStyle = {
     margin: 'auto',
     height: '100vh',
@@ -29,6 +30,11 @@ const Root = () => {
       </root.div>
     </>
   );
+};
+
+Root.propTypes = {
+  isStandalone: PropTypes.bool.isRequired,
+  authenticationMode: PropTypes.oneOf(['anonymous']).isRequired,
 };
 
 export default Root;
