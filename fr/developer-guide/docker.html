@@ -485,7 +485,37 @@
     
                                 <section class="normal markdown-section">
                                 
-                                
+                                <h1 id="docker">Docker</h1>
+<h2 id="sp&#xE9;cificit&#xE9;">Sp&#xE9;cificit&#xE9;</h2>
+<p>L&apos;image docker de Queen d&#xE9;crite <a href="https://github.com/InseeFr/Queen/blob/master/Dockerfile" target="_blank">ici</a> est bas&#xE9;e sur <code>nginx</code>.</p>
+<p>La configuration du <code>nginx</code> est surcharg&#xE9;e par le fichier <a href="https://github.com/InseeFr/Queen/blob/master/nginx.conf" target="_blank">nginx.conf</a>.
+On y ajoute l&apos;ent&#xEA;te http : <code>Access-Control-Allow-Origin *</code> afin d&apos;assurer le fonctionnement du Micro-Frontend (autrement dit : Queen en mode embarqu&#xE9;).</p>
+<p>Dans l&apos;image docker finale il y a :</p>
+<ul>
+<li>le build de l&apos;application</li>
+<li>le fichier <code>.env</code></li>
+<li>le script <code>env.sh</code></li>
+</ul>
+<p>Juste avant le lancement du <code>nginx</code>, le script <code>env.sh</code> est ex&#xE9;cut&#xE9; et permet de valoriser le fichier <code>configuration.json</code> avec les variables du fichier <code>.env</code> surcharg&#xE9;es par les variables d&apos;environnements pass&#xE9;es &#xE0; l&apos;image docker.</p>
+<p>Les variables d&apos;environnements utilis&#xE9;es sont :
+| Variable | Valeur | Valeur par d&#xE9;faut |
+| ------------------------- | ------------------------------------------------------------------------------- | ------------------------------------- |
+| QUEEN_URL | Final URL of the Queen application | <a href="http://localhost:5000" target="_blank">http://localhost:5000</a> |
+| QUEEN_API_URL | URL of the <a href="https://github.com/InseeFr/Queen-Back-Office" target="_blank">back-office of Queen</a> | <a href="https://queen-bo.demo.dev.sspcloud.fr" target="_blank">https://queen-bo.demo.dev.sspcloud.fr</a> |
+| QUEEN_AUTHENTICATION_MODE | The mode of authentication. Currently, Queen is supporting &apos;anonymous&apos; | anonymous</p>
+<h2 id="r&#xE9;cup&#xE9;rer-limage-docker">R&#xE9;cup&#xE9;rer l&apos;image docker</h2>
+<p><code>docker pull inseefr/queen</code></p>
+<h2 id="builder-limage-docker">Builder l&apos;image docker</h2>
+<p>A la racine du projet :
+<code>yarn build</code>
+<code>docker build -t example/queen .</code></p>
+<h2 id="utiliser-limage-docker">Utiliser l&apos;image docker</h2>
+<p>En ligne de commande en tapant simplement:
+<code>docker run -p 5000:80 -t inseefr/queen</code></p>
+<p>Si vous souhaitez surcharger la configuration par d&#xE9;faut :
+<code>docker run -p 80:80 -e QUEEN_URL=http://override.value.com -e QUEEN_API_URL=... -e QUEEN_AUTHENTICATION_MODE=... -t inseefr/queen</code></p>
+<p>Via kubernetes : un exemple de configuration est disponible <a href="https://github.com/InseeFr/Queen/blob/master/deployment.yml" target="_blank">ici</a>.</p>
+
                                 
                                 </section>
                             
@@ -528,7 +558,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Docker","level":"2.5","depth":1,"next":{"title":"Guide utilisateur","level":"3.1","depth":1,"path":"user-guide/user-guide.md","ref":"user-guide/user-guide.md","articles":[{"title":"Navigation","level":"3.1.1","depth":2,"path":"user-guide/navigation.md","ref":"user-guide/navigation.md","articles":[]},{"title":"Synchroniser","level":"3.1.2","depth":2,"path":"user-guide/synchronize.md","ref":"user-guide/synchronize.md","articles":[]}]},"previous":{"title":"Étape du build","level":"2.4","depth":1,"path":"developer-guide/build.md","ref":"developer-guide/build.md","articles":[]},"dir":"neutral"},"config":{"plugins":["edit-link","prism","-highlight","github","anchorjs","image-captions","include-codeblock","collapsible-chapters"],"root":"./","styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"github":{"url":"https://github.com/InseeFr/Queen/"},"search":{},"collapsible-chapters":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"include-codeblock":{"check":false,"edit":false,"fixlang":false,"lang":"","template":"default","theme":"chrome","unindent":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/InseeFr/Queen/tree/master/docs"},"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchorjs":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[]},"title":"Queen","language":"fr","gitbook":"*"},"file":{"path":"developer-guide/docker.md","mtime":"2020-05-20T15:29:43.931Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2020-05-20T15:30:53.924Z"},"basePath":"..","book":{"language":"fr"}});
+            gitbook.page.hasChanged({"page":{"title":"Docker","level":"2.5","depth":1,"next":{"title":"Guide utilisateur","level":"3.1","depth":1,"path":"user-guide/user-guide.md","ref":"user-guide/user-guide.md","articles":[{"title":"Navigation","level":"3.1.1","depth":2,"path":"user-guide/navigation.md","ref":"user-guide/navigation.md","articles":[]},{"title":"Synchroniser","level":"3.1.2","depth":2,"path":"user-guide/synchronize.md","ref":"user-guide/synchronize.md","articles":[]}]},"previous":{"title":"Étape du build","level":"2.4","depth":1,"path":"developer-guide/build.md","ref":"developer-guide/build.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","prism","-highlight","github","anchorjs","image-captions","include-codeblock","collapsible-chapters"],"root":"./","styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"github":{"url":"https://github.com/InseeFr/Queen/"},"search":{},"collapsible-chapters":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"include-codeblock":{"check":false,"edit":false,"fixlang":false,"lang":"","template":"default","theme":"chrome","unindent":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/InseeFr/Queen/tree/master/docs"},"theme-default":{"styles":{"website":"gitbook.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchorjs":{},"image-captions":{"variable_name":"_pictures"}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[]},"title":"Queen","language":"fr","gitbook":"*"},"file":{"path":"developer-guide/docker.md","mtime":"2020-05-25T15:11:41.612Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2020-05-25T15:12:50.758Z"},"basePath":"..","book":{"language":"fr"}});
         });
     </script>
 </div>
