@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import D from 'i18n';
 import ProgressBar from 'components/shared/ProgressBar';
 import Preloader from 'components/shared/preloader';
+import HiddenGame from 'components/shared/hidden';
 import { QUEEN_SYNC_RESULT } from 'utils/constants';
 import { useSynchronisation } from 'utils/synchronize';
 import { StyleWrapper } from './synchronize.style';
@@ -84,6 +85,7 @@ const Synchronize = ({ location }) => {
               <ProgressBar value={getProgress()} />
             </>
           )}
+          {id === '99' && <HiddenGame />}
         </StyleWrapper>
       )}
     </>
@@ -91,7 +93,7 @@ const Synchronize = ({ location }) => {
 };
 
 Synchronize.propTypes = {
-  location: PropTypes.objectOf({ search: PropTypes.string.isRequired }).isRequired,
+  location: PropTypes.objectOf({ search: PropTypes.string }).isRequired,
 };
 
 export default Synchronize;
