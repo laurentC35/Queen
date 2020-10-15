@@ -42,6 +42,12 @@ const Rooter = ({ configuration }) => {
                   component={routeProps => <Synchronize {...routeProps} />}
                 />
               )}
+              <Route
+                path={`/queen/vizualise`}
+                component={routeProps => (
+                  <OrchestratorManager {...routeProps} configuration={configuration} />
+                )}
+              />
               <Route path={standalone ? '/' : '/queen'} component={NotFound} />
             </Switch>
           </Router>
